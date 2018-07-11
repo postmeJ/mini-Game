@@ -1,0 +1,25 @@
+{
+	"initial": [
+		"libs/modules/egret/egret.js",
+		"libs/modules/egret/egret.web.js",
+		"libs/modules/game/game.js",
+		"libs/modules/tween/tween.js",
+		"libs/modules/res/res.js",
+		"libs/modules/eui/eui.js",
+		"promise/bin/promise.js"
+	],
+	"game": [
+		"bin-debug/global/TYPE.js",
+		"bin-debug/UI/Cards.js",
+		"bin-debug/global/Effects.js",
+		"bin-debug/global/FILES.js",
+		"bin-debug/global/GloVar.js",
+		"bin-debug/global/LayerManage.js",
+		"bin-debug/global/LayerManager.js",
+		"bin-debug/global/Sound.js",
+		"bin-debug/global/STATE.js",
+		"bin-debug/global/Tools.js",
+		"bin-debug/LoadingUI.js",
+		"bin-debug/Main.js"
+	]
+}
