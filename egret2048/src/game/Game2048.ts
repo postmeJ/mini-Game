@@ -42,6 +42,8 @@ class Game2048 extends eui.Component {
     }
 
     public addFromStage(): void {
+
+        // 新建图案
         for (let i: number = 0; i < this.gridNum; i++) {
             let row: number = i % 4
             let col: number = Math.floor(i / 4)
@@ -52,7 +54,7 @@ class Game2048 extends eui.Component {
         }
 
         this.contentCon.touchChildren = false
-
+ 
         this.gameOver.anchorOffsetX = this.gameOver.width >> 1
         this.gameOver.anchorOffsetY = this.gameOver.height >> 1
         this.gameOver.x = this.width >> 1

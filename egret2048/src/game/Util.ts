@@ -1,4 +1,5 @@
 class Util {
+    /** 创建矩形 */
     public static createRect(x: number, y: number, size: number, radius: number, color: number, alpha: number = 1): eui.Rect {
         let rect: eui.Rect = new eui.Rect(size, size, color)
         rect.x = x
@@ -9,6 +10,7 @@ class Util {
         return rect
     }
 
+    /** 创建标签 */
     public static createLabel(text: string, x: number, y: number, size: number, w: number, color: number, textAlign: string): eui.Label {
         let label: eui.Label = new eui.Label()
         label.text = `${text}`
@@ -23,7 +25,7 @@ class Util {
     }
 
     public static numStyle: any = {
-        "0": { "num": 0, "color": 0x7c736a, "bg": 0xcdc1b4, "size": 65 },
+        "0": { "num": 0, "color": 0x7c736a, "bg": 0xcdc1b4, "size": 65 }, // 网格上没有item的时候
         "2": { "num": 2, "color": 0x7c736a, "bg": 0xeee4da, "size": 65 },
         "4": { "num": 4, "color": 0x7c736a, "bg": 0xede0c8, "size": 65 },
         "8": { "num": 8, "color": 0xfff7eb, "bg": 0xf2b179, "size": 65 },

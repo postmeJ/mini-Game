@@ -14,7 +14,11 @@ class GridItem extends eui.Component {
 
     public setData(data: {num, color, bg, size}): void {
         this.data = data
+        
+        // 显示的矩形填充颜色
+        // 不知道是哪个属性的话,查看下该节点的所有属性
         this.grid.fillColor = data.bg
+
         if (data.num > 0) {
             this.numTxt.visible = true
             this.numTxt.text = data.num + ''

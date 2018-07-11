@@ -14,8 +14,8 @@
 		"bin-debug/Main.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/game/Game2048.js",
-		"bin-debug/game/GridData.js",
 		"bin-debug/game/GridItem.js",
+		"bin-debug/game/GridItemData.js",
 		"bin-debug/game/Util.js"
 	]
 }
