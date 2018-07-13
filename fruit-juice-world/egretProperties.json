@@ -1,31 +1,35 @@
 {
-  "native": {
-    "path_ignore": []
-  },
-  "publish": {
-    "web": 0,
-    "native": 1,
-    "path": "bin-release"
-  },
-  "egret_version": "3.0.6",
-  "modules": [
-    {
-      "name": "egret"
+    "native": {
+        "path_ignore": []
     },
-    {
-      "name": "game"
+    "publish": {
+        "web": 0,
+        "native": 1,
+        "path": "bin-release"
     },
-    {
-      "name": "tween"
-    },
-    {
-      "name": "res"
-    },
-    {
-      "name": "eui"
-    },
-    {
-      "name": "dragonBones"
-    }
-  ]
+    "egret_version": "3.0.6",
+    "modules": [
+        {
+            "name": "egret"
+        },
+        {
+            "name": "game"
+        },
+        {
+            "name": "tween"
+        },
+        {
+            "name": "res"
+        },
+        {
+            "name": "eui"
+        },
+        {
+            "name": "dragonBones"
+        },
+        {
+            "name": "egret_4399_h5api",
+            "path": "./externalLibs/egret_4399_h5api"
+        }
+    ]
 }
