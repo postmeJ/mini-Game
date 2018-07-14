@@ -37,7 +37,7 @@ class Director {
 
     // ==== 牵扯游戏逻辑的层管理
     /** 场景替换,其他场景删除,除了Main */
-    private repleseScene(layer: egret.DisplayObject) {
+    public replaceScene(layer: egret.DisplayObject) {
         if (this.gameLayer != null && layer != null) {
             this.gameLayer.removeChildren()
             this.gameLayer.addChild(layer)
@@ -46,7 +46,7 @@ class Director {
 
     /** 添加场景,放入堆中 */
     private stackLayer: egret.DisplayObject[]
-    private pushScene(layer: egret.DisplayObject) {
+    public pushScene(layer: egret.DisplayObject) {
         if (this.gameLayer != null && layer != null) {
             this.gameLayer.addChild(layer)
             this.stackLayer.push(layer)
@@ -54,7 +54,7 @@ class Director {
     }
 
     /** 删除场景,推出 */
-    private popScene(layer: egret.DisplayObject) {
+    public popScene(layer: egret.DisplayObject) {
         if (this.gameLayer != null && layer != null) {
             var len = this.stackLayer.length
             if (len) {

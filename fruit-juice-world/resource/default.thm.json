@@ -1,6 +1,18 @@
 {
-    "autoGenerateExmlsList": true,
-    "exmls": [
-        "src/module/index/IndexButtonSkin.exml"
-    ]
+  "autoGenerateExmlsList": true,
+  "exmls": [
+    "resource/module/game/GameEnterDlgSkin.exml",
+    "resource/module/game/GameMissionProgressSkin.exml",
+    "resource/module/game/GameProgressSkin.exml",
+    "resource/module/game/GameUISkin.exml",
+    "resource/module/index/IndexButtonSkin.exml",
+    "resource/module/index/IndexGroupSkin.exml",
+    "resource/module/index/IndexSceneSkin.exml",
+    "resource/module/index/IndexUISkin.exml",
+    "resource/module/loading/ResLoadingSkin.exml",
+    "resource/module/login/LoginSkin.exml",
+    "resource/module/lose/LoseLayerSkin.exml",
+    "resource/module/pause/PauseLayerSkin.exml",
+    "resource/module/win/WinUISkin.exml"
+  ]
 }
