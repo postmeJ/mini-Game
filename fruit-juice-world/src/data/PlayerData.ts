@@ -1,7 +1,7 @@
 class PlayerData {
     private static prefix = 'fruit_juice_world'
 
-    private static data = {
+    public static data = {
         fightLv: 1,
         gold: 0,
         heart: 0

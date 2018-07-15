@@ -13,6 +13,13 @@ class SceneManager {
         let layer = new Login()
         Director.getInstance().replaceScene(layer)
     }
+    
+    public static gotoIndex() {
+        var loading = new ResLoading();
+        Director.getInstance().pushScene(loading);
+        var call = new CallBackFunc().handler(SceneMgr.onIndex, this, []);
+        loading.load(["map", "index", "json"], call);
+    }
 
     private static onIndex() {
         let layer = new IndexScene()

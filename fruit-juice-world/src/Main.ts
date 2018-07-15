@@ -228,6 +228,7 @@ class Main extends eui.UILayer {
     protected createChildren(): void {
         super.createChildren()
 
+        /** 注册样式适配器 */
         var assetAdapter = new AssetAdapter()
         this.stage.registerImplementation("eui.IAssetAdapter", assetAdapter);
         this.stage.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
@@ -237,12 +238,18 @@ class Main extends eui.UILayer {
         this.loadingView = new LoadingUI()
         this.stage.addChild(this.loadingView)
 
-        // 加载resource
+        // 初始化Resource资源加载库
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/default.res.json", "resource/")
     }
 
     private onConfigComplete(event: RES.ResourceEvent): void {
-        
+        RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this)
+
+        //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
+        var theme = new eui.Theme("resource/default.thm.json", this.stage);
+        theme.addEventListener(eui.UIEvent.COMPLETE, this.onThemeLoadComplete, this);
+
+
     }
 }

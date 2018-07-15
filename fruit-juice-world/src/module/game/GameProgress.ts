@@ -1,31 +1,31 @@
-namespace Game {
-    export class GameProgressSkin extends eui.Component {
-        public readonly skinName = "GameProgressSkin";
+class GameProgress extends eui.Component {
 
-        private thumb: eui.Image;
-        private labelDisplay: eui.Label;
+    private thumb: eui.Image;
+    private labelDisplay: eui.Label;
 
-        constructor() {
-            super();
 
-            this.init();
+    constructor() {
+        super();
 
-            this.addEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
-            this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
-        }
+        this.skinName = "GameProgressSkin";
 
-        private addToStage() {
-            // Added to the on stage display list.
-        }
+        this.init();
 
-        private removeFromStage() {
-            // Removed from the display list.
-            this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
-            this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
-        }
+        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
+        this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
+    }
 
-        private init() {
-            // init
-        }
+    private addToStage() {
+        // Added to the on stage display list.
+    }
+
+    private removeFromStage() {
+        // Removed from the display list.
+        this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
+        this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
+    }
+
+    private init() {
+        // init
     }
 }
