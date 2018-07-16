@@ -69,7 +69,8 @@ class ResLoading extends eui.Component {
 
     private onResourceProgress(event: RES.ResourceEvent): void {
         this.setProgress(event.itemsLoaded, event.itemsTotal);
-        egret_4399_h5api.progress(event.itemsLoaded / event.itemsTotal * 100);
+        // test
+        // egret_4399_h5api.progress(event.itemsLoaded / event.itemsTotal * 100);
         //var item = event.resItem;
         //console.log(event.groupName + "[" + event.itemsLoaded + "/" + event.itemsTotal + "]:" + item.url);
     }

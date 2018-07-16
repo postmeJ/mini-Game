@@ -1,18 +1,18 @@
 {
   "autoGenerateExmlsList": true,
   "exmls": [
-    "resource/module/game/GameEnterDlgSkin.exml",
-    "resource/module/game/GameMissionProgressSkin.exml",
-    "resource/module/game/GameProgressSkin.exml",
-    "resource/module/game/GameUISkin.exml",
-    "resource/module/index/IndexButtonSkin.exml",
-    "resource/module/index/IndexGroupSkin.exml",
-    "resource/module/index/IndexSceneSkin.exml",
-    "resource/module/index/IndexUISkin.exml",
-    "resource/module/loading/ResLoadingSkin.exml",
-    "resource/module/login/LoginSkin.exml",
-    "resource/module/lose/LoseLayerSkin.exml",
-    "resource/module/pause/PauseLayerSkin.exml",
-    "resource/module/win/WinUISkin.exml"
+    "src/module/game/GameEnterDlgSkin.exml",
+    "src/module/game/GameMissionProgressSkin.exml",
+    "src/module/game/GameProgressSkin.exml",
+    "src/module/game/GameUISkin.exml",
+    "src/module/index/IndexButtonSkin.exml",
+    "src/module/index/IndexGroupSkin.exml",
+    "src/module/index/IndexSceneSkin.exml",
+    "src/module/index/IndexUISkin.exml",
+    "src/module/loading/ResLoadingSkin.exml",
+    "src/module/login/LoginSkin.exml",
+    "src/module/lose/LoseLayerSkin.exml",
+    "src/module/pause/PauseLayerSkin.exml",
+    "src/module/win/WinUISkin.exml"
   ]
 }

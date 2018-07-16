@@ -233,7 +233,7 @@ class Main extends eui.UILayer {
         this.stage.registerImplementation("eui.IAssetAdapter", assetAdapter);
         this.stage.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
 
-        egret_4399_h5api.initGame(Config.gameId, Config.gameName, this.stage.stageWidth, this.stage.stageHeight)
+        // egret_4399_h5api.initGame(Config.gameId, Config.gameName, this.stage.stageWidth, this.stage.stageHeight)
 
         this.loadingView = new LoadingUI()
         this.stage.addChild(this.loadingView)
@@ -250,6 +250,83 @@ class Main extends eui.UILayer {
         var theme = new eui.Theme("resource/default.thm.json", this.stage);
         theme.addEventListener(eui.UIEvent.COMPLETE, this.onThemeLoadComplete, this);
 
+        /** 加载组preload资源 */
+        RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+        RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
+        RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+        RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
+        RES.loadGroup("preload");
+    }
 
+    private isThemeLoadEnd: boolean = false;
+    /**
+     * 主题文件加载完成,开始预加载
+     */
+    private onThemeLoadComplete(): void {
+        this.isThemeLoadEnd = true;
+        this.createScene();
+    }
+
+    private isResourceLoadEnd: boolean = false;
+    /**
+     * preload资源组加载完成
+     */
+    private onResourceLoadComplete(event: RES.ResourceEvent): void {
+        if (event.groupName == "preload") {
+            this.stage.removeChild(this.loadingView);
+            RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+            RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
+            RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+            RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
+            this.isResourceLoadEnd = true;
+            this.createScene();
+        }
+    }
+
+    private createScene() {
+        if (this.isThemeLoadEnd && this.isResourceLoadEnd) {
+            this.startCreateScene();
+        }
+    }
+
+    /**
+     * 资源组加载出错
+     */
+    private onItemLoadError(event: RES.ResourceEvent): void {
+        console.warn("Url:" + event.resItem.url + " has failed to load");
+    }
+
+    /**
+     * 资源组加载出错
+     */
+    private onResourceLoadError(event: RES.ResourceEvent): void {
+        //TODO
+        console.warn("Group:" + event.groupName + " has failed to load");
+        //忽略加载失败的项目
+        this.onResourceLoadComplete(event);
+    }
+
+    /**
+     * preload资源组加载进度
+     */
+    private onResourceProgress(event: RES.ResourceEvent): void {
+        if (event.groupName == "preload") {
+            this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
+        }
+    }
+
+    /**
+     * 创建场景界面
+     */
+    protected startCreateScene(): void {
+        Director.getInstance().initWithMain(this);
+        PlayerData.initData();
+        // DCAgentMgr.init();// DC统计
+        //var layer = new CleanWithLineGameScene();
+        SceneManager.gotoLogin();
+        //SceneMgr.gotoIndex();
+        //SceneMgr.gotoGame();
+        //SceneMgr.gotoTest();
+        //SceneMgr.gotoChat();
     }
 }

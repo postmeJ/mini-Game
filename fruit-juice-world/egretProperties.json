@@ -26,10 +26,6 @@
         },
         {
             "name": "dragonBones"
-        },
-        {
-            "name": "egret_4399_h5api",
-            "path": "./externalLibs/egret_4399_h5api"
         }
     ]
 }

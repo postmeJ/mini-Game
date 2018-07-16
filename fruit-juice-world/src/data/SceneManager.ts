@@ -6,10 +6,10 @@ class SceneManager {
 
         let call = new CallBackFunc().handler(SceneManager.onLogin, this, [])
         // TODO login logoin
-        loading.load(['com', 'fruit', 'login', 'mp3'])
+        loading.load(['com', 'fruit', 'login', 'mp3'], call)
     }
 
-    public static onLogo() {
+    public static onLogin() {
         let layer = new Login()
         Director.getInstance().replaceScene(layer)
     }
@@ -17,7 +17,7 @@ class SceneManager {
     public static gotoIndex() {
         var loading = new ResLoading();
         Director.getInstance().pushScene(loading);
-        var call = new CallBackFunc().handler(SceneMgr.onIndex, this, []);
+        var call = new CallBackFunc().handler(SceneManager.onIndex, this, []);
         loading.load(["map", "index", "json"], call);
     }
 

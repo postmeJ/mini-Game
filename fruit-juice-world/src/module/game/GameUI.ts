@@ -1,5 +1,5 @@
 class GameUI extends eui.Component {
-    private top: eui.Image;
+    // private top: eui.Image;
     private pauseBtn: eui.Image;
     private progress: eui.ProgressBar;
     private star1: eui.Image;

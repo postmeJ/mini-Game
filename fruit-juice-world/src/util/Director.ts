@@ -3,7 +3,7 @@
 class Director {
     private static instance: Director = null
     public static getInstance() {
-        if (Director.instance) {
+        if (Director.instance == null) {
             Director.instance = new Director()
         }
         return Director.instance
@@ -45,7 +45,7 @@ class Director {
     }
 
     /** 添加场景,放入堆中 */
-    private stackLayer: egret.DisplayObject[]
+    private stackLayer: egret.DisplayObject[] = []
     public pushScene(layer: egret.DisplayObject) {
         if (this.gameLayer != null && layer != null) {
             this.gameLayer.addChild(layer)
@@ -54,14 +54,14 @@ class Director {
     }
 
     /** 删除场景,推出 */
-    public popScene(layer: egret.DisplayObject) {
-        if (this.gameLayer != null && layer != null) {
-            var len = this.stackLayer.length
-            if (len) {
-                var layer = this.stackLayer[len - 1]
+    public popScene() {
+        if (this.gameLayer != null) {
+            var len = this.stackLayer.length;
+            if (len > 0) {
+                var layer = this.stackLayer[len - 1];
                 if (layer.parent == this.gameLayer) {
                     this.gameLayer.removeChild(layer)
-                    Util.removeByElements(this.stackLayer, layer)
+                    Util.removeByElements(this.stackLayer, layer);
                 }
             }
         }
@@ -75,7 +75,7 @@ class Director {
     public getCurGuidLayer() {
         return this.guidLayer.curLayer
     }
-    
+
     public cleanGuidLayer() {
         this.guidLayer.cleanGuidLayer()
     }
@@ -90,7 +90,7 @@ class Director {
     public addNetOutLineLayer() {
         this.netLayer.addOutLineLayer()
     }
-    
+
     // 网络错误
     public addNetErrorLayer() {
         this.netLayer.addErrorLayer()

@@ -1,33 +1,55 @@
-namespace Game {
-    export class GameEnterDlgSkin extends eui.Component {
-        public readonly skinName = "GameEnterDlgSkin";
+class GameEnterDlg extends eui.Component {
+    private closeBtn: eui.Image;
+    private goImg: eui.Image;
+    private descLabel: eui.Label;
+    private lvLabel: eui.BitmapLabel;
+    private lv: number;
 
-        private closeBtn: eui.Image;
-        private goImg: eui.Image;
-        private descLabel: eui.Label;
-        private lvLabel: eui.BitmapLabel;
+    constructor(lv: number) {
+        super();
+        this.lv = lv;
+        this.skinName = "GameEnterDlgSkin";
 
-        constructor() {
-            super();
+        // this.init();
+        this.initData()
+        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
+        this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
+    }
 
-            this.init();
+    private addToStage() {
+        // Added to the on stage display list.
+        this.goImg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGo, this);
+        this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onClose, this);
+    }
 
-            this.addEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
-            this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
+    private removeFromStage() {
+        // Removed from the display list.
+        this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
+        this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
+    }
+
+    private init() {
+        // init
+    }
+
+    private onClose() {
+        SoundsManager.playBtnMusic();
+        Director.getInstance().popScene();
+    }
+
+    private initData() {
+        this.lvLabel.text = this.lv.toString();
+
+        var data = FileManager.getLvConfigDataById(this.lv);
+        if (data) {
+            var str = "在" + data["step"] + "步之内达到" + data["score"] + "分";
+            this.descLabel.text = str;
         }
+    }
 
-        private addToStage() {
-            // Added to the on stage display list.
-        }
-
-        private removeFromStage() {
-            // Removed from the display list.
-            this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
-            this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
-        }
-
-        private init() {
-            // init
-        }
+    private onGo() {
+        SoundsManager.playBtnMusic();
+        GameData.initLvData(this.lv);
+        SceneManager.gotoGame();
     }
 }

@@ -7,6 +7,13 @@ class PlayerData {
         heart: 0
     }
 
+    public static initData() {
+        let localData = this.get()
+        if (localData) {
+            this.data = JSON.parse(localData);
+        }
+    }
+
     public static saveLv(lv: number) {
         if (lv >= this.data.fightLv) {
             this.data.fightLv = lv

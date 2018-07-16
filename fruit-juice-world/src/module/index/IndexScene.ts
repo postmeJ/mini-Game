@@ -8,6 +8,7 @@ class IndexScene extends eui.Component {
 
         this.skinName = 'IndexSceneSkin'
 
+        // 上面的UI界面
         this.indexUI = new IndexUI();
         this.addChild(this.indexUI);
 
@@ -24,7 +25,7 @@ class IndexScene extends eui.Component {
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
     }
 
-
+    /** 初始化视图和视图视口位置 */
     private initData() {
         this.list.addChild(new IndexGroup());
 

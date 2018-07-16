@@ -22,7 +22,7 @@
         }
     </style>
 
-    <script src="https://cdn1.lncld.net/static/js/av-min-1.0.0.js"></script>
+    <!-- <script src="https://cdn1.lncld.net/static/js/av-min-1.0.0.js"></script> -->
 
     <!--这个标签为通过egret提供的第三方库的方式生成的 javascript 文件。删除 modules_files 标签后，库文件加载列表将不会变化，请谨慎操作！-->
     <!--modules_files_start-->
@@ -34,7 +34,6 @@
 	<script egret="lib" src="libs/modules/res/res.js" src-release="libs/modules/res/res.min.js"></script>
 	<script egret="lib" src="libs/modules/eui/eui.js" src-release="libs/modules/eui/eui.min.js"></script>
 	<script egret="lib" src="libs/modules/dragonBones/dragonBones.js" src-release="libs/modules/dragonBones/dragonBones.min.js"></script>
-	<script egret="lib" src="libs/modules/egret_4399_h5api/egret_4399_h5api.js" src-release="libs/modules/egret_4399_h5api/egret_4399_h5api.min.js"></script>
 	<!--modules_files_end-->
 
     <!--这个标签为不通过egret提供的第三方库的方式使用的 javascript 文件，请将这些文件放在libs下，但不要放在modules下面。-->
@@ -45,11 +44,31 @@
     <!--game_files_start-->
 	<script egret="game" src="bin-debug/AssetAdapter.js"></script>
 	<script egret="game" src="bin-debug/data/Config.js"></script>
+	<script egret="game" src="bin-debug/data/FileManager.js"></script>
 	<script egret="game" src="bin-debug/data/PlayerData.js"></script>
 	<script egret="game" src="bin-debug/data/SceneManager.js"></script>
 	<script egret="game" src="bin-debug/data/SoundsManager.js"></script>
 	<script egret="game" src="bin-debug/LoadingUI.js"></script>
 	<script egret="game" src="bin-debug/Main.js"></script>
+	<script egret="game" src="bin-debug/module/game/Cell.js"></script>
+	<script egret="game" src="bin-debug/module/game/CellManager.js"></script>
+	<script egret="game" src="bin-debug/module/game/GameConfig.js"></script>
+	<script egret="game" src="bin-debug/module/game/GameData.js"></script>
+	<script egret="game" src="bin-debug/module/game/GameEnterDlg.js"></script>
+	<script egret="game" src="bin-debug/module/game/GameEvent.js"></script>
+	<script egret="game" src="bin-debug/module/game/GameMissionProgress.js"></script>
+	<script egret="game" src="bin-debug/module/game/GameProgress.js"></script>
+	<script egret="game" src="bin-debug/module/game/GameScene.js"></script>
+	<script egret="game" src="bin-debug/module/game/GameUI.js"></script>
+	<script egret="game" src="bin-debug/module/index/IndexButton.js"></script>
+	<script egret="game" src="bin-debug/module/index/IndexGroup.js"></script>
+	<script egret="game" src="bin-debug/module/index/IndexScene.js"></script>
+	<script egret="game" src="bin-debug/module/index/IndexUI.js"></script>
+	<script egret="game" src="bin-debug/module/loading/ResLoading.js"></script>
+	<script egret="game" src="bin-debug/module/login/Login.js"></script>
+	<script egret="game" src="bin-debug/module/lose/LoseLayer.js"></script>
+	<script egret="game" src="bin-debug/module/pause/PauseLayer.js"></script>
+	<script egret="game" src="bin-debug/module/win/WinUI.js"></script>
 	<script egret="game" src="bin-debug/net/Net.js"></script>
 	<script egret="game" src="bin-debug/net/NetError.js"></script>
 	<script egret="game" src="bin-debug/net/NetMsg.js"></script>
@@ -67,7 +86,7 @@
 </head>
 
 <!-- 加载4399的h5api -->
-<script src="http://stat.api.4399.com/h5api/h5api.php"></script>
+<!-- <script src="http://stat.api.4399.com/h5api/h5api.php"></script> -->
 
 <body>
 
@@ -79,12 +98,12 @@
         egret.runEgret({ renderMode: "canvas" });
     </script>
 
-    <script src="http://api.mix.guohead.com/GH.js"></script>
+    <!-- <script src="http://api.mix.guohead.com/GH.js"></script> -->
     <script>
-        GH.config({
-            spid: "d9173201f484a290"
-        });
-        GH.showAd();
+        // GH.config({
+        //     spid: "d9173201f484a290"
+        // });
+        // GH.showAd();
     </script>
 </body>
 

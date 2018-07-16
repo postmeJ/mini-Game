@@ -758,7 +758,7 @@
         },
         {
             "keys": "output_sea1_png,output_sea2_png,output_ship1_png,output_ship2_png,start_dao_png,wm_png,ap_png,bb_png,birl_png,birl2_png,could2_png,gp_png,l2_png,lm_png,output_beach_png,output_cloud_png,output_sea_png,textureTree_png,tree_json,textureTree_json",
-            "name": "logoin"
+            "name": "login"
         },
         {
             "keys": "worldmap_2_jpg,worldmap_3_jpg,worldmap_4_jpg,worldmap_5_jpg,worldmap_1_jpg",
