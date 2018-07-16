@@ -17,6 +17,7 @@ class Cell extends egret.Sprite {
 
         this.id = id
         this.sprite = new eui.Image()
+        this.addChild(this.sprite)
 
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddStage, this)
     }
@@ -46,7 +47,35 @@ class Cell extends egret.Sprite {
             this.sprite.x = this.width / 2;
             this.sprite.y = this.height / 2;
         }
+        else {
+            console.error('没有对应的texture', res)
+        }
     }
 
-    
+    public setSelect(b: boolean) {
+        if (this.isSelected != b) {
+            this.isSelected = b
+            if (b) {
+                this.runSelectedAni()
+            } else {
+
+            }
+        }
+    }
+
+    private runSelectedAni() {
+        if (this.isAction == false) {
+            this.isAction = true;
+            SoundsManager.playClickCellMusic();
+            egret.Tween.removeTweens(this);
+
+            var tw = egret.Tween.get(this);
+            tw.to({ scaleX: 0.8, scaleY: 1.3 }, 100, egret.Ease.bounceIn)
+                .to({ scaleX: 1.1, scaleY: 1 }, 100, egret.Ease.bounceOut)
+                .to({ scaleX: 1, scaleY: 1 }, 100, egret.Ease.backIn)
+                .call(function () {
+                    this.isAction = false;
+                }, this);
+        }
+    }
 }
