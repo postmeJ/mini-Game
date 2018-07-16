@@ -26,6 +26,10 @@
         },
         {
             "name": "dragonBones"
+        },
+        {
+            "name": "tiled",
+            "path": "./externalLibs/libTMX"
         }
     ]
 }

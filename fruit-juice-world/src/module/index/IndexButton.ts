@@ -64,6 +64,7 @@ class IndexButton extends eui.Component {
         this.bg.source = this.getStateImage();
     }
 
+    /** icon上下移动 */
     private showIcon() {
         this.icon.visible = true;
         var tw = egret.Tween.get(this.icon, { loop: true });

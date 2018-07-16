@@ -10,6 +10,7 @@ var game_file_list = [
 	"libs/modules/res/res.js",
 	"libs/modules/eui/eui.js",
 	"libs/modules/dragonBones/dragonBones.js",
+	"libs/modules/tiled/tiled.js",
 	"bin-debug/AssetAdapter.js",
 	"bin-debug/data/Config.js",
 	"bin-debug/data/FileManager.js",
