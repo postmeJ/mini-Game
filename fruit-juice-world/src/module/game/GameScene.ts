@@ -151,7 +151,7 @@ class GameScene extends egret.DisplayObjectContainer {
 
                 egret.log("row: " + cell.row + ", column: " + cell.column);
 
-                //提示线
+                // 提示线
                 var point = new egret.Point(cell.x, cell.y);
                 this.createPointLine(point);
                 this.pointLineBeganCell = cell;
@@ -159,12 +159,14 @@ class GameScene extends egret.DisplayObjectContainer {
         }
     }
 
+    /** 清空cleanList */
     private deleteCleanList() {
         CellManager.cleanList = [];
         CellManager.lineArray = [];
         this.cleanIndex = 0;
     }
 
+    /** 添加点,并且开始画线 */
     private pushCleanCell(cell) {
         CellManager.cleanList.push(cell);
         var length = CellManager.cleanList.length;
@@ -177,6 +179,12 @@ class GameScene extends egret.DisplayObjectContainer {
         }
     }
 
+    /**
+     * 画线
+     * 修改x,y,width,angle
+     * @param fromCell 
+     * @param toCell
+     */
     private drawLine(fromCell: Cell, toCell: Cell) {
         let lineTexture: egret.Texture = RES.getRes('line_png')
         let line = new eui.Image()
@@ -198,7 +206,158 @@ class GameScene extends egret.DisplayObjectContainer {
         line.width = distance
 
         // angle
-        
+        let angle = this.getAngle(fromPoint, toPoint);
+        line.rotation = angle;
+    }
+
+    /**
+     * 获取角度,范围[0, 360]
+     */
+    private getAngle(beganPoint: egret.Point, endPoint: egret.Point) {
+        let x = endPoint.x - beganPoint.x;
+        let y = Math.abs(endPoint.y - beganPoint.y);
+        let z = egret.Point.distance(beganPoint, endPoint);
+        let a = Math.round(Math.asin(y / z) / Math.PI * 180);
+
+        if (beganPoint.x > endPoint.x) { // 2,3 象限
+            if (beganPoint.y > endPoint.y) { // 2
+                a = a + 180;
+            } else if (beganPoint.y < endPoint.y) { // 3
+                a = 180 - a;
+            } else if (beganPoint.y == endPoint.y) {
+                a = 180;
+            }
+        } else if (beganPoint.x < endPoint.x) { // 1,4 象限
+            if (beganPoint.y > endPoint.y) { // 1
+                a = 360 - a;
+            } else if (beganPoint.y < endPoint.y) { // 4
+                a = a;
+            } else if (beganPoint.y == endPoint.y) {
+                a = 0;
+            }
+        } else if (beganPoint.x == endPoint.x) {
+            if (beganPoint.y > endPoint.y) {
+                a = 270;
+            } else if (beganPoint.y < endPoint.y) {
+                a = 90;
+            }
+        }
+        return a;
+    }
+
+    /** 创建提示线 */
+    private createPointLine(p: egret.Point) {
+        if (this.pointLine && this.pointLine.parent) {
+            this.pointLine.parent.removeChild(this.pointLine)
+        }
+
+        this.pointLine = new eui.Image()
+        this.pointLine.texture = RES.getRes('line_png')
+        this.pointLine.width = 0
+        this.pointLine.anchorOffsetX = 0
+        this.pointLine.anchorOffsetY = this.pointLine.height / 2
+        this.pointLine.x = p.x
+        this.pointLine.y = p.y
+        this.linePanel.addChild(this.pointLine)
+    }
+
+    private onMove(e: egret.TouchEvent) {
+        if (this.state == GameState.Play) {
+            let x = e.stageX
+            let y = e.stageY
+            this.updatePointLineEnd(x, y)
+
+            let cell: Cell = CellManager.getTouchCell(x, y)
+            if (cell) {
+                // 倒一倒二要回退
+                if (cell.isSelected) {
+                    let b = CellManager.getIsLastTwoInCleanList(cell)
+                    if (b) {
+                        CellManager.removeTopLine()
+
+                        let topItem = CellManager.removeTopItemInCleanList()
+                        topItem.setSelect(false)
+
+                        this.updatePointLineBegan(x, y)
+                    }
+                }
+                else {
+                    let sameId = CellManager.getCleanListID()
+                    let isAround = CellManager.isInAround(cell)
+                    if (cell.id === sameId && isAround) {
+                        cell.setSelect(true)
+                        this.pushCleanCell(cell)
+                        this.updatePointLineBegan(x, y)
+                    }
+                }
+            }
+        }
+    }
+
+    private onEnd() {
+        let listLength = CellManager.cleanList.length
+        if (listLength >= GameConfig.baseCleanNum) {
+            if (this.state == GameState.Play) {
+                this.state = GameState.DealLogic
+                this.cleanOneByOne()
+            }
+        }
+
+        /** cleanList是数组 */
+        for (let k in CellManager.cleanList) {
+            let item: Cell = CellManager.cleanList[k]
+            item.setSelect(false)
+        }
+
+        this.cleanAllLine()
+    }
+
+    private cleanAllLine() {
+        this.linePanel.removeChildren()
+    }
+
+    private cleanOneByeOne() {
+        var len = CellManager.cleanList.length;
+        // 清理完毕
+        if (len == 0) {
+            this.deleteCleanList();
+            this.dropAndFillCell();
+        }
+        // 清除下一个
+        else {
+            var item: Cell = CellManager.cleanList[0];
+            this.createDirtyAndScore(item);
+            item.clean();
+
+            SoundsManager.playRemoveCellMusic(this.cleanIndex);
+            this.cleanIndex++;
+        }
+    }
+
+    private createDirtyAndScore(cell: Cell) {
+        let dirtyArr = ["apple_png", "blueberry_png",
+            "mangosteen_png", "lemon_png", "watermelon_png"];
+        let id = cell.id;
+
+        let dirty = new eui.Image(dirtyArr[id - 1]);
+        let texture = RES.getRes(dirtyArr[id - 1]);
+        dirty.anchorOffsetX = texture.textureWidth / 2;
+        dirty.anchorOffsetY = texture.textureHeight / 2;
+        dirty.x = cell.x;
+        dirty.y = cell.y;
+        dirty.scaleX = dirty.scaleY = 0;
+        dirty.rotation = Math.random() * 360;
+        this.cellPanel.addChild(dirty);
+
+        let tw = egret.Tween.get(dirty);
+        tw.to({ scaleX: 1.2, scaleY: 1.2 }, 400, egret.Ease.bounceOut)
+            .wait(200)
+            .to({ alpha: 0 }, 100)
+            .call(function (node) {
+                if (node && node.parent) {
+                    node.parent.removeChild(node);
+                }
+            }, this, [dirty]);
 
     }
-}
+}   

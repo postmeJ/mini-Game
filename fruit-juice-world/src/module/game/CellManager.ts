@@ -1,10 +1,10 @@
 class CellManager {
     /** 所有cell数组 */
-    public static cellArray = []
+    public static cellArray: Cell[][] = []
     /** 清理cell的队列 */
-    public static cleanList = []
+    public static cleanList: Cell[] = []
     /** 临时存放line的数组 */
-    public static lineArray = []
+    public static lineArray: eui.Image[] = []
 
     /** 清空cellArray数组,重置cellArray所有元素为null */
     public static cleanCellArray() {
@@ -290,5 +290,17 @@ class CellManager {
             }
         }
         return ret;
+    }
+
+    /** 删除最后一条线 */
+    public static removeTopLine() {
+        let length = this.lineArray.length
+        if (length > 0) {
+            let lineItem = this.lineArray[length - 1]
+            Util.removeByElements(this.lineArray, lineItem)
+            if (lineItem.parent) {
+                lineItem.parent.removeChild(lineItem)
+            }
+        }
     }
 }

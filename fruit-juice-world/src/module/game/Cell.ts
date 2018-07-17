@@ -10,7 +10,7 @@ class Cell extends egret.Sprite {
     private sprite: eui.Image = null
 
     private isAction: boolean = false
-    private isSelected: boolean = false
+    public isSelected: boolean = false
 
     public constructor(id) {
         super()
@@ -78,4 +78,27 @@ class Cell extends egret.Sprite {
                 }, this);
         }
     }
+
+    private clean() {
+        Util.removeByElements(CellManager.cleanList, this)
+        CellManager.cleanCell(this)
+
+        let tw = egret.Tween.get(this)
+        tw.to({ scaleX: 0.4, scaleY: 0.4 }, 200)
+            .call(() => {
+                this.sendCleanOverEvent()
+            }, this)
+            .wait(50)
+            .call(() => {
+                if (this.parent) {
+                    this.parent.removeChild(this)
+                }
+            }, this)
+    }
+
+    private sendCleanOverEvent() {
+        var event: GameEvent = new GameEvent(GameEvent.CleanOver);
+        this.dispatchEvent(event);
+    }
+
 }
