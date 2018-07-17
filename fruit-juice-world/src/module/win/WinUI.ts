@@ -63,7 +63,7 @@ class WinUI extends eui.Component {
 
     /** 返回首页 */
     private clickBtn1() {
-        SceneManager.gotoLogin()
+        SceneManager.gotoIndex()
     }
 
     /** 重玩 */
@@ -73,6 +73,7 @@ class WinUI extends eui.Component {
 
     /** 下一关 */
     private clickBtn3() {
+        GameData.initLvData(GameData.enterLv + 1)
         SceneManager.gotoGame()
     }
 }

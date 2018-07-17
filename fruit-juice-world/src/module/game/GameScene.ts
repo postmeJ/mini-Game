@@ -22,6 +22,7 @@ class GameScene extends egret.DisplayObjectContainer {
         this.onLoadMap()
     }
 
+    /** 加载地图 */
     private onLoadMap() {
         let url: string = "resource/fruit-juice-world/tmx/map1.tmx";
         let urlLoader: egret.URLLoader = new egret.URLLoader();
@@ -36,13 +37,7 @@ class GameScene extends egret.DisplayObjectContainer {
         urlLoader.load(new egret.URLRequest(url));
     }
 
-    // private onLoaded() {
-    //     if (this.map) {
-    //         this.map.visible = true
-    //         this.map.scaleX = this.map.scaleY = 8 / 9
-    //     }
-    // }
-
+    /** 设置下地图 */
     private onLoaded() {
         if (this.map) {
             this.map.visible = true;
@@ -69,7 +64,8 @@ class GameScene extends egret.DisplayObjectContainer {
         this.addChild(bg);
     }
 
-
+    /** 不好 */
+    /** 用于放置line的容器 */
     private initLinePanel() {
         this.linePanel = new egret.Sprite();
         this.linePanel.name = "linePanel";
@@ -88,6 +84,7 @@ class GameScene extends egret.DisplayObjectContainer {
         this.addChild(this.linePanel);
     }
 
+    /** 用于放置cell的容器 */
     private initCellPanel() {
         this.cellPanel = new egret.Sprite();
         this.cellPanel.name = "cellPanel";
@@ -113,6 +110,7 @@ class GameScene extends egret.DisplayObjectContainer {
         this.addChild(this.cellPanel);
     }
 
+    /** 开局时,初始化所有的cell */
     private initCell() {
         CellManager.cleanList = [];
         CellManager.cleanCellArray();
@@ -126,18 +124,24 @@ class GameScene extends egret.DisplayObjectContainer {
         }
     }
 
+    /** 创建cell */
     private createCell(row, column, id): Cell {
-        var cell = new Cell(id);
+        let cell = new Cell(id);
         cell.row = row;
         cell.column = column;
-        // test
         // cell.addEventListener(GameEvent.CleanOver, this.cleanOneByeOne, this);
-        // cell.addEventListener(GameEvent.DropOver, this.onDropOver, this);
+        cell.addEventListener(GameEvent.CleanOver, this.cleanOneByOne, this)
+        cell.addEventListener(GameEvent.DropOver, this.onDropOver, this);
         CellManager.cellArray[row][column] = cell;
         this.cellPanel.addChild(cell);
         return cell;
     }
 
+    /**
+     * 触碰开始时
+     * cell入栈
+     * 提示线
+     */
     private onBegan(e: egret.TouchEvent) {
         if (this.state === GameState.Play) {
             this.deleteCleanList()
@@ -148,8 +152,6 @@ class GameScene extends egret.DisplayObjectContainer {
             if (cell) {
                 cell.setSelect(true)
                 this.pushCleanCell(cell)
-
-                egret.log("row: " + cell.row + ", column: " + cell.column);
 
                 // 提示线
                 var point = new egret.Point(cell.x, cell.y);
@@ -180,10 +182,10 @@ class GameScene extends egret.DisplayObjectContainer {
     }
 
     /**
-     * 画线
+     * 画连接线
      * 修改x,y,width,angle
-     * @param fromCell 
-     * @param toCell
+     * 提示线是移动的,连接线不不动的
+     * 连接线是放入lineArray中,提示线不需要
      */
     private drawLine(fromCell: Cell, toCell: Cell) {
         let lineTexture: egret.Texture = RES.getRes('line_png')
@@ -245,7 +247,9 @@ class GameScene extends egret.DisplayObjectContainer {
         return a;
     }
 
-    /** 创建提示线 */
+    /** 
+     * 创建提示线,目前宽度为0
+     */
     private createPointLine(p: egret.Point) {
         if (this.pointLine && this.pointLine.parent) {
             this.pointLine.parent.removeChild(this.pointLine)
@@ -265,6 +269,8 @@ class GameScene extends egret.DisplayObjectContainer {
         if (this.state == GameState.Play) {
             let x = e.stageX
             let y = e.stageY
+
+            // 每次都重新绘制
             this.updatePointLineEnd(x, y)
 
             let cell: Cell = CellManager.getTouchCell(x, y)
@@ -294,6 +300,11 @@ class GameScene extends egret.DisplayObjectContainer {
         }
     }
 
+    /**
+     * 触摸结束
+     * 清空栈,修改cell状态
+     * 清除所有的线
+     */
     private onEnd() {
         let listLength = CellManager.cleanList.length
         if (listLength >= GameConfig.baseCleanNum) {
@@ -316,7 +327,7 @@ class GameScene extends egret.DisplayObjectContainer {
         this.linePanel.removeChildren()
     }
 
-    private cleanOneByeOne() {
+    private cleanOneByOne() {
         var len = CellManager.cleanList.length;
         // 清理完毕
         if (len == 0) {
@@ -334,7 +345,9 @@ class GameScene extends egret.DisplayObjectContainer {
         }
     }
 
+    /** 灰尘和分数 */
     private createDirtyAndScore(cell: Cell) {
+        // 灰尘
         let dirtyArr = ["apple_png", "blueberry_png",
             "mangosteen_png", "lemon_png", "watermelon_png"];
         let id = cell.id;
@@ -349,15 +362,105 @@ class GameScene extends egret.DisplayObjectContainer {
         dirty.rotation = Math.random() * 360;
         this.cellPanel.addChild(dirty);
 
-        let tw = egret.Tween.get(dirty);
-        tw.to({ scaleX: 1.2, scaleY: 1.2 }, 400, egret.Ease.bounceOut)
+        egret.Tween.get(dirty)
+            .to({ scaleX: 1.2, scaleY: 1.2 }, 400, egret.Ease.bounceOut)
             .wait(200)
             .to({ alpha: 0 }, 100)
-            .call(function (node) {
-                if (node && node.parent) {
-                    node.parent.removeChild(node);
+            .call(() => {
+                if (dirty.parent) {
+                    dirty.parent.removeChild(dirty);
                 }
-            }, this, [dirty]);
+            })
 
+        // 分数
+        let score = 10;
+        this.UILayer.addScore(score);
+        let scoreLabel = new eui.Label();
+        scoreLabel.text = 10 + '';
+        scoreLabel.anchorOffsetX = scoreLabel.width / 2;
+        scoreLabel.anchorOffsetY = scoreLabel.height / 2;
+        scoreLabel.x = cell.x;
+        scoreLabel.y = cell.y;
+        this.cellPanel.addChild(scoreLabel);
+        egret.Tween.get(scoreLabel).to({ y: cell.y - 40 }, 400)
+            .call(() => {
+                if (scoreLabel.parent) {
+                    scoreLabel.parent.removeChild(scoreLabel);
+                }
+            }, this);
+
+    }
+
+    private dropAndFillCell() {
+        // 下落
+        for (var i = GameConfig.row - 1; i >= 0; i--) {
+            for (var j = 0; j < GameConfig.column; j++) {
+
+                let item: Cell = CellManager.cellArray[i][j];
+                if (item != null) {
+                    var _item = CellManager.getDropRowAndColumn(item);
+                    var row = _item.row;
+                    var column = _item.column;
+                    if (item.row != row || item.column != column) {
+                        item.drop(_item.row, _item.column);
+                    }
+                }
+            }
+        }
+
+        // 填充
+        var emptyPosArr = CellManager.getEmptyCell();
+        for (let k in emptyPosArr) {
+            let emptyRow = emptyPosArr[k].row;
+            let emptyColumn = emptyPosArr[k].column;
+            let id = CellManager.genDropCellId();
+            let cell = this.createCell(emptyRow, emptyColumn, id);
+            cell.x = CellManager.getCellPosX(emptyColumn);
+            cell.y = -Cell.CellHeight / 2;
+            cell.drop(emptyRow, emptyColumn);
+        }
+    }
+
+    // 更新提示线的起点
+    private updatePointLineBegan(x: number, y: number) {
+        let len = CellManager.cleanList.length
+        if (len > 0) {
+            let topCell = CellManager.cleanList[len - 1]
+            this.pointLineBeganCell = topCell
+            this.updatePointLineEnd(x, y)
+        }
+    }
+
+    // 舞台坐标x, y 更新提示线的结束点
+    private updatePointLineEnd(x: number, y: number) {
+        if (this.pointLine && this.pointLineBeganCell) {
+            var linePoint = new egret.Point(this.pointLineBeganCell.x, this.pointLineBeganCell.y);
+            // 坐标转换
+            var p = this.linePanel.globalToLocal(x, y);
+            var distance = egret.Point.distance(linePoint, p);
+            this.pointLine.width = distance;
+            this.pointLine.x = linePoint.x;
+            this.pointLine.y = linePoint.y;
+            this.pointLine.anchorOffsetX = 0;
+            this.pointLine.anchorOffsetY = this.pointLine.height / 2;
+            var angle = this.getAngle(linePoint, p);
+            this.pointLine.rotation = angle;
+        }
+    }
+
+    private onDropOver() {
+        var b = CellManager.isAllMove();
+        if (b == false) {
+            this.onStepOver();
+        }
+    }
+
+    private onStepOver() {
+        this.state = GameState.Play;
+        this.UILayer.reduceStep();
+    }
+
+    private outSide() {
+        this.onEnd()
     }
 }   

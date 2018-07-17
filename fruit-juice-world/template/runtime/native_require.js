@@ -21,6 +21,7 @@ var game_file_list = [
 	"bin-debug/Main.js",
 	"bin-debug/module/game/Cell.js",
 	"bin-debug/module/game/CellManager.js",
+	"bin-debug/module/game/DCAgentManager.js",
 	"bin-debug/module/game/GameConfig.js",
 	"bin-debug/module/game/GameData.js",
 	"bin-debug/module/game/GameEnterDlg.js",

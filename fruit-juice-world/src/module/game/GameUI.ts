@@ -17,8 +17,6 @@ class GameUI extends eui.Component {
 
         this.skinName = 'GameUISkin'
 
-        this.init();
-
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
         this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
     }
@@ -39,10 +37,6 @@ class GameUI extends eui.Component {
         // Removed from the display list.
         this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
         this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.removeFromStage, this);
-    }
-
-    private init() {
-        // init
     }
 
     /** 星级评估没有被使用 */
@@ -131,25 +125,6 @@ class GameUI extends eui.Component {
     }
 
     private onBtn() {
-        return;
-        // CellMgr.removeAllCellAction();
-
-        // //var cell = CellMgr.cellArray[0][0];
-        // //var arr = [cell];
-        // //CellMgr.getSameArrByCell(cell, arr);
-        // //CellMgr.setAllCellCheckFlag(false);
-        // //for (var k in arr) {
-        // //    var item:Cell = arr[k];
-        // //    item.noticeAction();
-        // //}
-        // var arr = CellMgr.getNowCleanListNum();
-        // for (var k in arr) {
-        //     for (var j in arr[k]) {
-        //         var item: Cell = arr[k][j];
-        //         item.noticeAction();
-        //     }
-        // }
-
     }
 }
 

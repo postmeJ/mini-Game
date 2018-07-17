@@ -79,7 +79,7 @@ class Cell extends egret.Sprite {
         }
     }
 
-    private clean() {
+    public clean() {
         Util.removeByElements(CellManager.cleanList, this)
         CellManager.cleanCell(this)
 
@@ -101,4 +101,34 @@ class Cell extends egret.Sprite {
         this.dispatchEvent(event);
     }
 
+    private moveSpeed: number = 400;
+    public drop(row, column) {
+        var x = CellManager.getCellPosX(column);
+        var y = CellManager.getCellPosY(row);
+
+
+        var dis = this.getDistance({ x: this.x, y: this.y }, { x: x, y: y });
+        var time = (dis / this.moveSpeed) * 1000;
+
+        this.moveFlag = true;
+        CellManager.setCell(this, row, column);
+        var tw = egret.Tween.get(this);
+        tw.to({ x: x, y: y }, time, egret.Ease.bounceOut).call(() => {
+            this.moveFlag = false;
+            this.sendDropOverEvent();
+        }, this);
+
+    }
+
+    private getDistance(began, end): number {
+        var disX = Math.pow(end.x - began.x, 2);
+        var disY = Math.pow(end.y - began.y, 2);
+        var dis = Math.sqrt(disX + disY);
+        return dis;
+    }
+
+    private sendDropOverEvent() {
+        var event: GameEvent = new GameEvent(GameEvent.DropOver);
+        this.dispatchEvent(event);
+    }
 }
