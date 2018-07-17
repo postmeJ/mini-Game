@@ -1,3 +1,8 @@
+/**
+ * 1. goto 加载场景需要的资源
+ * 2. on 进入场景 
+ */
+
 class SceneManager {
     /** 跳转到'加载'和'登陆'界面 */
     public static gotoLogin() {

@@ -1,3 +1,8 @@
+
+/**
+ * 1. 显示
+ * 2. 点击跳入游戏界面
+ */
 class GameEnterDlg extends eui.Component {
     private closeBtn: eui.Image;
     private goImg: eui.Image;

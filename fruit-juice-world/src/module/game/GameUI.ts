@@ -1,3 +1,8 @@
+
+/**
+ * 1. 显示
+ * 2. 并且显示成功和失败的UI
+ */
 class GameUI extends eui.Component {
     // private top: eui.Image;
     private pauseBtn: eui.Image;

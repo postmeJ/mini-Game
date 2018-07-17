@@ -1,3 +1,11 @@
+/**
+ * 1. 显示
+ * 2. 加载和显示地图资源
+ * 3. 初始化linePanel和cellPanel
+ * 4. 手势操作时,对应画线,消除
+ * 5. 产生新的cell,下降和填充
+ * 6. 完善状态切换,和事件处理
+ */
 class GameScene extends egret.DisplayObjectContainer {
     private linePanel: egret.Sprite
     private cellPanel: egret.Sprite

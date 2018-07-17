@@ -1,4 +1,7 @@
-// TODO: 我们可以把
+/**
+ * 1. 主场景
+ * 2. 场景initWithMain,replaceScene,pushScene,popScene
+ */
 
 class Director {
     private static instance: Director = null

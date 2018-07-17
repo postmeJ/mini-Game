@@ -1,3 +1,8 @@
+/**
+ * 1. 显示
+ * 2. 内嵌一个group,用一个group来滚动显示
+ */
+
 class IndexScene extends eui.Component {
     private list: eui.Group;
     private indexUI: IndexUI

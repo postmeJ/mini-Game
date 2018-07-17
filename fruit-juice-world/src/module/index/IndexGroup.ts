@@ -1,3 +1,8 @@
+/**
+ * 1. 显示
+ * 2. 关联13个按钮
+ */
+
 class IndexGroup extends eui.Component {
     private btn1: IndexButton;
     private btn2: IndexButton;

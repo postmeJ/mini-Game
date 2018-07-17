@@ -1,3 +1,8 @@
+/**
+ * 1. 记录基本的玩家数据
+ * 2. 提供接口,修改本类中保存的数据
+ */
+
 class PlayerData {
     private static prefix = 'fruit_juice_world'
 

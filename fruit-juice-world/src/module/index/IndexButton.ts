@@ -5,6 +5,9 @@ enum LevelState {
 }
 
 /** 游戏进入按钮 */
+/**
+ * 1. 显示
+ */
 class IndexButton extends eui.Component {
     private bg: eui.Image;
     private lvLabel: eui.Label;

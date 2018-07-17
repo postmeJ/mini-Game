@@ -1,3 +1,8 @@
+/**
+ * 1. 显示
+ * 2. 加载和播放龙骨动画
+ */
+
 class Login extends eui.Component {
     private sky: eui.Rect;
     private bird1: eui.Image;
