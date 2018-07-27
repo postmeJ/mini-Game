@@ -1,0 +1,7 @@
+.vscode/
+.wing/
+.idea/
+
+bin-debug/
+libs/
+promise/
